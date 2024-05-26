@@ -1,4 +1,4 @@
-const bycrypt=require('bcryptjs');
+const bcrypt=require('bcryptjs');
 const jwt=require("jsonwebtoken")
 const User= require("../models/User");
 /* REGISTER USER*/
@@ -10,20 +10,20 @@ const register = async (req, res) => {
           lastName,
           email,
           password,
-          picturePath,
+          picture,
           friends,
           location,
           occupation,
       } = req.body;
       const salt = await bcrypt.genSalt();
       const passwordHash = await bcrypt.hash(password, salt);
-  
+  console.log(picture.path)
       const newUser = new User({
         firstName,
         lastName,
         email,
         password: passwordHash,
-        picturePath,
+        picturePath: picture.path,
         friends,
         location,
         occupation,
@@ -42,6 +42,7 @@ const login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email: email });
+ 
     if (!user) return res.status(400).json({ msg: "User does not exist." });
 
     const isMatch = await bcrypt.compare(password, user.password);

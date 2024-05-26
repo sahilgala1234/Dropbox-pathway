@@ -12,7 +12,7 @@ const { fileURLToPath } = require("url");
 const authRoutes = require("./routes/auth.js");
 const userRoutes = require("./routes/users.js");
 const postRoutes = require("./routes/posts.js");
-const { register } = require("./controllers/auth.js");
+const { register} = require("./controllers/auth.js");
 const { verifyToken } = require("./middleware/auth.js");
 const { createPost } = require("./controllers/posts.js");
 
@@ -63,8 +63,10 @@ mongoose.connect(process.env.MONGO_URL, {
 
 
   /*ROUTES WITH FILES*/
-  app.post("/auth/register",upload.single("picture",register))
-  app.post('/posts',verifyToken,upload.single("picture"),createPost)
+
+
+app.post("/auth/register", upload.single("picture"),register);
+  app.post('/posts',upload.single("picture"),createPost)
 
   /*ROUTES*/
   

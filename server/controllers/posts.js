@@ -2,12 +2,14 @@ const User = require("../models/User.js")
 const Post=require("../models/posts.js")
 const createPost=async(req,res)=>{
     try{
+     
   const {userId,description,picturePath}=req.body
   const user=await User.findById(userId)
-  const neePost=new Post({
+ 
+  const newPost=new Post({
    userId,
    firstName: user.firstName,
-   lastName: user.lastname,
+   lastName: user.lastName,
    location: user.location,
    description,
    userPicturePath: user.picturePath,
@@ -21,6 +23,7 @@ res.status(201).json(post);
     }
     catch(err)
     {
+      console.log(err);
         res.status(409).json({message:err.message})
     }
 }
@@ -28,6 +31,8 @@ res.status(201).json(post);
 const getFeedPosts = async (req, res) => {
     try {
       const post = await Post.find();
+      console.log("hi")
+      console.log(post)
       res.status(200).json(post);
     } catch (err) {
       res.status(404).json({ message: err.message });
@@ -48,6 +53,7 @@ const getUserPosts = async (req, res) => {
     try {
       const {id}=req.params;
       const {userId}=req.body;
+      console.log(userId)
       const post=await Post.findById(id);
       const isLiked=post.likes.get(userId)
       if(isLiked){

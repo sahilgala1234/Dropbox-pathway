@@ -57,23 +57,23 @@ const Form = () => {
 
   const register = async (values, onSubmitProps) => {
     // this allows us to send form info with image
-    console.log(values)
-    console.log(onSubmitProps)
+    
     onSubmitProps.validateForm()
-    const formData = new FormData();
-    for (let value in values) {
-      formData.append(value, values[value]);
-    }
-    formData.append("picturePath", values.picture.name);
-
+    
+    console.log(values)
     const savedUserResponse = await fetch(
       "http://localhost:3001/auth/register",
       {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+         
+        },
+        body: JSON.stringify(values),
       }
     );
     const savedUser = await savedUserResponse.json();
+    console.log(savedUser)
     onSubmitProps.resetForm();
 
     if (savedUser) {
@@ -97,6 +97,7 @@ const Form = () => {
         })
       );
       navigate("/home");
+   
     }
   };
 
@@ -176,6 +177,7 @@ const Form = () => {
                   helperText={touched.occupation && errors.occupation}
                   sx={{ gridColumn: "span 4" }}
                 />
+                
                 <Box
                   gridColumn="span 4"
                   border={`1px solid ${palette.neutral.medium}`}

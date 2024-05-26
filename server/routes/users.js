@@ -4,8 +4,8 @@ const {verifyToken}=require("../middleware/auth.js")
 const router=express.Router();
 //READ
 
-router.get("/:id",verifyToken,getUser)
-router.get("/:id",verifyToken,getUserFriends)
+router.get("/:id",getUser)
+router.get("/:id",getUserFriends)
 //UPDATE
-router.get("/:id",verifyToken,addRemoveFriend)
+router.get("/:id",addRemoveFriend)
 module.exports=router

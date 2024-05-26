@@ -2,7 +2,9 @@ const User=require("../models/User")
 const getUser=async(req,res)=>{
     try{
         const {id}=req.params;
+        console.log(id)
         const user=await User.findById(id);
+        console.log(user)
         res.status(200).json(user);
     }
     catch(err)
